@@ -47,7 +47,7 @@ class Host::ListingsController < ApplicationController
 
   def listing_create_paramms
     params.require(:listing).permit(
-    :title, :about, :max_guests, :address_line1, :address_line2, :city, :state, :postal_code, :country)
+    :title, :about, :max_guests, :address_line1, :address_line2, :city, :state, :postal_code, :country, :lat, :lng)
   end
 
 
