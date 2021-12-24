@@ -53,7 +53,7 @@ class Host::ListingsController < ApplicationController
 
   def listing_update_paramms
     params.require(:listing).permit(
-    :title, :about, :max_guests)
+    :title, :about, :max_guests, :status)
   end
 
 end
