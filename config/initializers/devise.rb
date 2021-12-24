@@ -273,13 +273,12 @@ Devise.setup do |config|
   # up on your models and hooks.
   config.omniauth(
     :google_oauth2,
-    "590314582830-puj817219kjr7ooq2kcnvf6rb5rqjsrm.apps.googleusercontent.com",
-    "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",
+    Rails.application.credentials.google[:client_id],
+    Rails.application.credentials.google[:client_secret],
     scope: 'email',
     name: 'google',
     access_type: 'offline',
     image_aspect_ratio: 'square'
-    #strategy_class: OmniAuth::Strategies::Google0auth2
   )
 
 
