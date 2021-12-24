@@ -6,3 +6,6 @@ import { application } from "./application"
 
 import AddressController from "./address_controller.js"
 application.register("address", AddressController)
+
+import RoomController from "./room_controller.js"
+application.register("room", RoomController)
