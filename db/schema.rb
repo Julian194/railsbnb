@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_24_134823) do
+ActiveRecord::Schema.define(version: 2021_12_25_125239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,9 @@ ActiveRecord::Schema.define(version: 2021_12_24_134823) do
     t.integer "status", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "nightly_price"
+    t.integer "cleaning_fee"
+    t.string "stripe_product_id"
     t.index ["host_id"], name: "index_listings_on_host_id"
   end
 
@@ -76,6 +79,17 @@ ActiveRecord::Schema.define(version: 2021_12_24_134823) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["listing_id"], name: "index_photos_on_listing_id"
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "listing_id", null: false
+    t.bigint "guest_id", null: false
+    t.string "session_id"
+    t.integer "status", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["guest_id"], name: "index_reservations_on_guest_id"
+    t.index ["listing_id"], name: "index_reservations_on_listing_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -108,6 +122,8 @@ ActiveRecord::Schema.define(version: 2021_12_24_134823) do
     t.datetime "locked_at"
     t.string "provider"
     t.string "uid"
+    t.string "stripe_customer_id"
+    t.string "name"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -119,5 +135,7 @@ ActiveRecord::Schema.define(version: 2021_12_24_134823) do
   add_foreign_key "beds", "rooms"
   add_foreign_key "listings", "users", column: "host_id"
   add_foreign_key "photos", "listings"
+  add_foreign_key "reservations", "listings"
+  add_foreign_key "reservations", "users", column: "guest_id"
   add_foreign_key "rooms", "listings"
 end

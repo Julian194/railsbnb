@@ -1,4 +1,6 @@
 class Host::ListingsController < ApplicationController
+  before_action :authenticate_user!
+
   def new
     @listing = Listing.new
   end
@@ -47,13 +49,32 @@ class Host::ListingsController < ApplicationController
 
   def listing_create_paramms
     params.require(:listing).permit(
-    :title, :about, :max_guests, :address_line1, :address_line2, :city, :state, :postal_code, :country, :lat, :lng)
+      :title,
+      :about,
+      :max_guests,
+      :address_line1,
+      :address_line2,
+      :city,
+      :state,
+      :postal_code,
+      :country,
+      :lat,
+      :lng,
+      :nightly_price,
+      :cleaning_fee
+    )
   end
 
 
   def listing_update_paramms
     params.require(:listing).permit(
-    :title, :about, :max_guests, :status)
+      :title,
+      :about,
+      :max_guests,
+      :status,
+      :nightly_price,
+      :cleaning_fee
+    )
   end
 
 end

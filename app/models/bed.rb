@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: beds
+#
+#  id         :integer          not null, primary key
+#  room_id    :integer          not null
+#  bed_size   :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Bed < ApplicationRecord
   belongs_to :room
   enum bed_size: {
