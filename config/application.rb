@@ -18,5 +18,14 @@ module Clearbnb
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    Rails.application.config.after_initialize do
+      ActiveStorage::DirectUploadsController.class_eval do
+        private
+        def verified_service_name
+          ActiveStorage::Blob.service.name
+        end
+      end
+    end
+
   end
 end

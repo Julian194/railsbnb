@@ -1,0 +1,7 @@
+<h1 class="text-2xl mb-4 font-bold">Photos</h1>
+<%= form_with model: @photo do |form| %>
+  <%= form.file_field :photo, name: "photo[photo]", direct_upload: true %>
+  <%= form.label :caption, "Caption:" %>
+  <%= form.text_field :caption %>
+  <%= form.submit %>
+<% end %>
