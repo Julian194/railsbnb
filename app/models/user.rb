@@ -25,6 +25,7 @@
 #  provider               :string
 #  uid                    :string
 #  stripe_customer_id     :string
+#  name                   :string
 #
 
 class User < ApplicationRecord
