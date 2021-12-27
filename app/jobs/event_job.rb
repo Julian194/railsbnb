@@ -33,9 +33,21 @@ class EventJob < ApplicationJob
     case event.type
     when "checkout.session.completed"
       checkout_session = event.data.object
-      puts "Checkout session ID: #{checkout_session.id}"
-      puts "Checkout session Metadata: #{checkout_session.metadata}"
+      reservation = Reservation.find_by(session_id: checkout_session.id)
+      if reservation.nil?
+        raise "No reservation found with Checkout Session ID #{checkout_session.id}"
+      end
+      reservation.update(status: :booked, stripe_payment_intent_id: checkout_session.payment_intent)
+
+    when "charge.refunded"
+      charge = event.data.object
+      reservation = Reservation.find_by(stripe_payment_intent_id: charge.payment_intent)
+      if reservation.nil?
+        raise "No reservation found with Payment Intent ID #{charge.payment_intent}"
+      end
+      reservation.update(status: :cancelled)
     end
+
   end
 
 end

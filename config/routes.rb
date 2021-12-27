@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   root to: 'static_pages#home'
 
   resources :listings, only: [:index, :show]
-  resources :reservations
+  resources :reservations do
+    member do
+      post '/cancel' => 'reservations#cancel'
+    end
+  end
   post '/webhooks/:source' => 'webhooks#create'
 
   namespace :host do

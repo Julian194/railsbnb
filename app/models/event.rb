@@ -4,7 +4,7 @@
 #
 #  id            :integer          not null, primary key
 #  request_body  :text
-#  status        :integer
+#  status        :integer          default("0")
 #  error_message :text
 #  source        :string
 #  event_type    :string
