@@ -46,6 +46,11 @@ class EventJob < ApplicationJob
         raise "No reservation found with Payment Intent ID #{charge.payment_intent}"
       end
       reservation.update(status: :cancelled)
+
+    when "account.updated"
+      account = event.data.object
+      user = User.find_by(stripe_account_id: account.id)
+      user.update(charges_enabled: account.charges_enabled)
     end
 
   end

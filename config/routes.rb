@@ -12,15 +12,20 @@ Rails.application.routes.draw do
   post '/webhooks/:source' => 'webhooks#create'
 
   namespace :host do
+    resources :merchant_settings do
+      collection do
+        get :connect, to: 'merchant_settings#connect'
+        get :connected, to: 'merchant_settings#connected'
+      end
+    end
     resources :listings do
       resources :photos, only: [:index, :create, :destroy]
-      # /host/listings/:listing_id/rooms
       resources :rooms, only: [:index, :create, :destroy]
     end
   end
 
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   resque_web_constraint = lambda do |request|
     current_user = request.env['warden'].user
